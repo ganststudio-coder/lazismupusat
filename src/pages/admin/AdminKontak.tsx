@@ -3,8 +3,9 @@ import { Loader2, Save, Phone } from 'lucide-react';
 import { useToast } from '../../components/Toast';
 import { ImageUpload } from '../../components/ImageUpload';
 import type { KontakSettings } from '../../lib/types';
+import { getSupabaseFunctionUrl } from '../../lib/env';
 
-const API = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-api/kontak`;
+const API = getSupabaseFunctionUrl('admin-api', 'kontak');
 
 export function AdminKontak() {
   const notify = useToast();

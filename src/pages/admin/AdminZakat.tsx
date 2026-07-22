@@ -3,8 +3,9 @@ import { Loader2, Save, Calculator } from 'lucide-react';
 import { useToast } from '../../components/Toast';
 import { formatRupiah } from '../../lib/utils';
 import type { ZakatSettings } from '../../lib/types';
+import { getSupabaseFunctionUrl } from '../../lib/env';
 
-const API = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-api/zakat`;
+const API = getSupabaseFunctionUrl('admin-api', 'zakat');
 
 export function AdminZakat() {
   const notify = useToast();

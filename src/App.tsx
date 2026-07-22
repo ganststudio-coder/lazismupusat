@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
 import { AuthProvider, useAuth } from './lib/auth';
 import { ToastProvider } from './components/Toast';
-import { useRouter } from './lib/router';
+import { RouterProvider, useRouter } from './lib/router';
 import { PublicLayout } from './components/PublicLayout';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
@@ -104,10 +104,12 @@ function Routes() {
 export default function App() {
   return (
     <AuthProvider>
-      <ToastProvider>
-        <DonationBridge />
-        <Routes />
-      </ToastProvider>
+      <RouterProvider>
+        <ToastProvider>
+          <DonationBridge />
+          <Routes />
+        </ToastProvider>
+      </RouterProvider>
     </AuthProvider>
   );
 }
