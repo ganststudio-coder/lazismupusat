@@ -5,8 +5,9 @@ import { useToast } from '../../components/Toast';
 import { Modal, ConfirmDialog } from '../../components/Modal';
 import { supabase } from '../../lib/supabase';
 import type { AdminUser, AdminRole } from '../../lib/types';
+import { getSupabaseFunctionUrl } from '../../lib/env';
 
-const LOGIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-login`;
+const LOGIN_URL = getSupabaseFunctionUrl('admin-login');
 
 export function AdminAdmins() {
   const { admin, isMaster } = useAuth();

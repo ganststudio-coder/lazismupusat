@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Send, Bot, User, Sparkles, Loader2 } from 'lucide-react';
 import type { ChatMessage } from '../lib/types';
+import { getSupabaseFunctionUrl } from '../lib/env';
 
-const AI_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
+const AI_URL = getSupabaseFunctionUrl('ai-chat');
 const QUICK_QS = [
   'Apa itu zakat maal?',
   'Bagaimana cara menghitung zakat profesi?',
@@ -56,7 +57,7 @@ export function AIChat() {
         ts: Date.now(),
       };
       setMessages((m) => [...m, reply]);
-    } catch (e) {
+    } catch {
       setMessages((m) => [
         ...m,
         { id: `e-${Date.now()}`, role: 'assistant', content: 'Maaf, terjadi kendala teknis. Silakan coba lagi nanti.', ts: Date.now() },

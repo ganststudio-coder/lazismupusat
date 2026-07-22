@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { getSupabaseFunctionUrl } from './env';
 import type { AdminUser } from './types';
 
 const STORAGE_KEY = 'lazismu_admin_session';
-const LOGIN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-login`;
+
+const LOGIN_URL = getSupabaseFunctionUrl('admin-login');
 
 interface AdminSession {
   admin: AdminUser;
