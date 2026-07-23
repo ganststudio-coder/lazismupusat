@@ -76,7 +76,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-px flex flex-col items-center justify-between gap-3 py-5 text-xs text-white/50 sm:flex-row">
-          <p>© {new Date().getFullYear()} LAZISMU Jakarta Pusat. Seluruh hak cipta dilindungi.</p>
+          <p>© {new Date().getFullYear()} Ganst-Studio. All rights reserved.</p>
           <button
             onClick={() => navigate('/admin')}
             className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-white/40 transition hover:bg-white/10 hover:text-white/70"
