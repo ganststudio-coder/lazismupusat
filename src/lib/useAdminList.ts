@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
+import { getSupabaseFunctionUrl } from './env';
 
-const API_BASE = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-api`;
+const API_BASE = getSupabaseFunctionUrl('admin-api');
 
 export function useAdminList<T>(resource: string) {
   const [items, setItems] = useState<T[]>([]);

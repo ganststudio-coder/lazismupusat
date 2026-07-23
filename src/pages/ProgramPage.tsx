@@ -1,6 +1,5 @@
 import { HandHeart, ArrowRight } from 'lucide-react';
 import { usePrograms } from '../lib/data';
-import { useRouter } from '../lib/router';
 import { ProgramCard } from './DashboardPage';
 import { useDonationModal } from '../components/PublicLayout';
 import { DonationModal } from '../components/DonationModal';

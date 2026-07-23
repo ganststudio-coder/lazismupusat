@@ -52,7 +52,8 @@ Deno.serve(async (req: Request) => {
       }
 
       // enforce max 4 admins when creating new (not here — login only)
-      const { password_hash: _ph, ...safe } = admin;
+      const safe = { ...admin, password_hash: undefined };
+      delete safe.password_hash;
       return json({ admin: safe }, 200);
     }
 

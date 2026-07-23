@@ -10,7 +10,7 @@ export function SlideCarousel({ slides }: { slides: DashboardSlide[] }) {
   const timer = useRef<number | null>(null);
 
   const count = slides.length;
-  const go = useCallback((n: number) => setIdx((c) => (n + count) % count), [count]);
+  const go = useCallback((n: number) => setIdx(() => (n + count) % count), [count]);
   const next = useCallback(() => go(idx + 1), [go, idx]);
   const prev = useCallback(() => go(idx - 1), [go, idx]);
 
