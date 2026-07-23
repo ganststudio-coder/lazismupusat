@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
 import { AuthProvider, useAuth } from './lib/auth';
 import { ToastProvider } from './components/Toast';
-import { useRouter } from './lib/router';
+import { RouterProvider, useRouter } from './lib/router';
 import { PublicLayout } from './components/PublicLayout';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
@@ -87,7 +87,9 @@ function Routes() {
     return <AdminGuard active={path}>{adminPages[path] ?? <NotFound onHome={() => navigate('/admin')} />}</AdminGuard>;
   }
 
-  const wrap = (node: ReactNode) => <PublicLayout>{node}</PublicLayout>;
+  const wrap = (node: ReactNode) => (
+  <PublicLayout key={path}>{node}</PublicLayout>
+);
 
   if (path === '/') return wrap(<DashboardPage onDonate={() => window.dispatchEvent(new CustomEvent('open-donasi'))} />);
   if (path === '/berita') return wrap(<BeritaPage />);
@@ -103,11 +105,13 @@ function Routes() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <DonationBridge />
-        <Routes />
-      </ToastProvider>
-    </AuthProvider>
+    <RouterProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <DonationBridge />
+          <Routes />
+        </ToastProvider>
+      </AuthProvider>
+    </RouterProvider>
   );
 }

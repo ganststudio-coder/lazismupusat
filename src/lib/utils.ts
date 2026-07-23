@@ -1,5 +1,3 @@
-import { supabase, ASSETS_BUCKET } from './supabase';
-
 export function formatRupiah(n: number): string {
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
@@ -28,15 +26,30 @@ export function pct(collected: number, target: number): number {
   return Math.min(100, Math.round((collected / target) * 100));
 }
 
+// --- Upload gambar via Cloudinary (unsigned upload) ---
+const CLOUDINARY_CLOUD_NAME = 'iov76arj';
+const CLOUDINARY_UPLOAD_PRESET = 'jlc1q3ay';
+
 export async function uploadAsset(file: File, folder: string): Promise<{ url: string; error?: string }> {
-  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-  const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from(ASSETS_BUCKET).upload(filename, file, {
-    cacheControl: '3600',
-    upsert: false,
-    contentType: file.type,
-  });
-  if (error) return { url: '', error: error.message };
-  const { data } = supabase.storage.from(ASSETS_BUCKET).getPublicUrl(filename);
-  return { url: data.publicUrl };
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    formData.append('folder', `lazismu/${folder}`);
+
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      { method: 'POST', body: formData }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { url: '', error: data?.error?.message || 'Gagal mengunggah gambar ke Cloudinary' };
+    }
+
+    return { url: data.secure_url as string };
+  } catch (err) {
+    return { url: '', error: (err as Error).message || 'Gagal mengunggah gambar' };
+  }
 }
